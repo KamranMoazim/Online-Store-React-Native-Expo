@@ -1,233 +1,144 @@
 import {useState} from "react"
 import { StyleSheet, View, Platform, StatusBar,
-  Dimensions
+  Dimensions, Text
  } from 'react-native';
 import {useDimensions, useDeviceOrientation} from "@react-native-community/hooks"
-
+import {MaterialCommunityIcons} from "@expo/vector-icons"
 
 import WelcomeScreen from "./app/screens/WelcomeScreen";
 import ViewImageScreen from "./app/screens/ViewImageScreen";
+import ListingsScreen from "./app/screens/ListingsScreen"
+import ListingDetailsScreen from "./app/screens/ListingDetailsScreen";
+
+import AppText from "./app/components/AppText"
+import AppButton from "./app/components/AppButton";
+
 
 export default function App() {
 
   const handlePress = () => console.log("texted clicked")
 
   // *********** 1
-  // console.log(Dimensions.get("screen")) // it has a problem that is don't tell details when our phone is 
-  // on rotated mode so we use @react-native-community/hooks ---> useDimension
-  // console.log(useDimensions())
-  // console.log(useDeviceOrientation())
-  // <View style={{backgroundColor:"dodgerblue", width:'100%', height:landscape?"100%":"30%"}}></View>
-  // const {landscape} = useDeviceOrientation();
-  // you can change the orientation by going to app.json and then ---> orientation
-  // or you can strictly follow portrait or landscape 
-
-
-  // *********** 2
-  // flex: 1 means it will take the whole avaliable space given by its parent
-  // flex: 0.5 means it will take half of the whole avaliable space given by its parent
-  //  <View style={{
-  //   backgroundColor:"#fff",
-  //   flex:0.5  // flex:1
-  // }}>
+  // about border, you can set styles collectively and individual sides
+  // <View style={styles.container}>
   //   <View style={{
   //     backgroundColor:"dodgerblue",
-  //     flex:2 //
-  //   }} />
-  //   <View style={{
-  //     backgroundColor:"tomato",
-  //     flex:1
-  //   }} />
-  //   <View style={{
-  //     backgroundColor:"gold",
-  //     flex:1
-  //   }} /> 
+  //     height:100,
+  //     width:100,
+  //     borderWidth:10,
+  //     borderColor:"royalblue",
+  //     borderRadius:10,
+  //     // borderTopWidth:20,
+  //     // borderTopColor:"purple",
+  //     // borderTopLeftRadius:30,
+  //   }}>
+  //   </View>
   // </View>
+
+  // *********** 2
+  // shadow styling
+  // --- IOS shadow styles ---
+  // shadowColor:"grey",
+  // shadowOffset:{height:10, width:-10},
+  // shadowOpacity:0.5,
+  // shadowRadius:10,
+  // --- Android shadow styles ---
+  // elevation:50 // only this single property for android shadow
 
 
   // *********** 3
-  // flexDirection:"row" // it is for the main-axis representation and its opposite will be the secondary-axis
-  // by-default it is column
-  // <View style={{
-  //   backgroundColor:"#fff",
-  //   paddingTop:Platform.OS === "android" ? StatusBar.currentHeight : 0,
-  //   flex:1,
-  //   flexDirection:"row-reverse"
-  // }}>
+  // padding (which is inside and applied to parent container) and margin (which is outside and applied to self container)
+  // <View style={styles.container}>
   //   <View style={{
   //     backgroundColor:"dodgerblue",
   //     height:100,
-  //     width:100
-  //   }} />
+  //     width:100,
+  //     padding:20,
+  //     paddingHorizontal:10, // above will be override by this (only horizontally)  
+  //     paddingVertical:20,  // above will be override by this (only vertically)
+  //     paddingLeft:30,  // above will be override by this (only from left side)    ===> and same for margin
+  //   }}>
+  //     <View style={{
+  //       backgroundColor:"gold", 
+  //       height:50, 
+  //       width:50
+  //     }}>
+  //     </View>
+  //   </View>
   //   <View style={{
   //     backgroundColor:"tomato",
   //     height:100,
-  //     width:100
-  //   }} />
-  //   <View style={{
-  //     backgroundColor:"gold",
-  //     height:100,
-  //     width:100
-  //   }} /> 
+  //     width:100,
+  //     margin:20,
+  //     marginVertical:30,
+  //   }}></View>
   // </View>
 
   // *********** 4
-  // justifyContent:"center" // for maovement along main-axis
-  // alignItems:"center" // for maovement along secondary-axis
-  // both of above are applied to parent container
-  // alignSelf:"flex-start"
-  // alignSelf is applied to each self
-  // alignItems:"stretch" // you will see it in action when one of child do not have height or width 
-  // depending on what is the main-axis and it is default behaviour
-  // alignItems:"baseline" // you will see it in action when one of child have different height or width 
-  // <View style={{
-  //   backgroundColor:"#fff",
-  //   paddingTop:Platform.OS === "android" ? StatusBar.currentHeight : 0,
-  //   flex:1,
-  //   flexDirection:"column",
-  //   justifyContent:"center",
-  //   alignItems:"center"
+  // text styling and you can also go to "custom fonts" to Expo.com for custom fonts
+  // <Text style={{
+  //   fontFamily:"",
+  //   fontSize:30,
+  //   fontStyle:"italic",
+  //   fontWeight:"600",
+  //   color:"dodgerblue",
+  //   textTransform:"capitalize",
+  //   textDecorationStyle:"dotted",
+  //   textAlign:"justify",
+  //   lineHeight:100
   // }}>
-  //   <View style={{
-  //     backgroundColor:"dodgerblue",
-  //     height:100,
-  //     width:100
-  //   }} />
-  //   <View style={{
-  //     backgroundColor:"tomato",
-  //     height:100,
-  //     width:100
-  //   }} />
-  //   <View style={{
-  //     backgroundColor:"gold",
-  //     height:100,
-  //     width:100
-  //   }} /> 
-  // </View>
+  //   I Love Pakistan!
+  // </Text>
 
 
   // *********** 5
-  // flexWrap:"wrap" // by default it is no-wrap 
-  // alignItems:"center" starts behaving differently when we use flexWrap. it will align the contents 
-  // of each line along its line (you will see it when you have different height or width child) NOT along
-  // the secondary axis (as it should) now if you wants to align contents along the secondary-axis, we have
-  // to use alignContent:"center", 
-  // now which we used to do with alignItems, have to do with alignContent because of flexWrap
-  // <View style={{
-  //   backgroundColor:"#fff",
-  //   paddingTop:Platform.OS === "android" ? StatusBar.currentHeight : 0,
-  //   flex:1,
-  //   flexDirection:"row",
-  //   justifyContent:"center",
-  //   alignItems:"center",
-  //   flexWrap:"wrap",
-  //   alignContent:"center"
-  // }}>
-  //   <View style={{
-  //     backgroundColor:"dodgerblue",
-  //     height:100,
-  //     width:100
-  //   }} />
-  //   <View style={{
-  //     backgroundColor:"tomato",
-  //     height:200,
-  //     width:100
-  //   }} />
-  //   <View style={{
-  //     backgroundColor:"gold",
-  //     height:100,
-  //     width:100
-  //   }} />
-  //   <View style={{
-  //     backgroundColor:"grey",
-  //     height:100,
-  //     width:100
-  //   }} />
-  // </View>
+  // made AppText
+  // made AppButton
 
   // *********** 6
-  // flexBasis:100   // it is like setting height or width of each child when it is not given depending on
-  // main-axis, like if main-axis is row then it will be applied to width, it is applied to child no parent
-  // flexGrow:1  // it is also applied to child and will take whole available space 
-  // flexShrink:1  // it is also applied to child and will take space so that other child do not wrap-out 
-  // you will see them in action when you have white extra sapce (for flexGrow) and when your child is mkaing
-  // other child go wrap-out (for flexShrink) 
-  // flex:1 or flex:-1 have the same effect as the above two combine have
-  // <View style={{
-  //   backgroundColor:"#fff",
-  //   paddingTop:Platform.OS === "android" ? StatusBar.currentHeight : 0,
-  //   flex:1,
-  //   flexDirection:"column",
-  //   justifyContent:"center",
-  //   alignItems:"center",
-  // }}>
-  //   <View style={{
-  //     backgroundColor:"dodgerblue",
-  //     height:900,
-  //     width:100,
-  //   }} />
-  //   <View style={{
-  //     backgroundColor:"tomato",
-  //     height:100,
-  //     width:100
-  //   }} />
-  //   <View style={{
-  //     backgroundColor:"gold",
-  //     height:100,
-  //     width:100
-  //   }} />
-  // </View>
+  // Icons , go to Expo Icons
+  // <MaterialCommunityIcons name="phone" color="dodgerblue" size={100} />
 
 
   // *********** 7
-  // position:"relative" // it means this child is positioned according to its current position
-  // above is default  
-  // position:"absolute" // it means this child is positioned according to its parent position
-  // <View style={{
-  //   backgroundColor:"#fff",
-  //   paddingTop:Platform.OS === "android" ? StatusBar.currentHeight : 0,
-  //   flex:1,
-  //   flexDirection:"row",
-  //   justifyContent:"center",
-  //   alignItems:"center",
-  // }}>
-  //   <View style={{
-  //     backgroundColor:"dodgerblue",
-  //     height:100,
-  //     width:100,
-  //   }} />
-  //   <View style={{
-  //     backgroundColor:"tomato",
-  //     height:100,
-  //     width:100,
-  //     top:10,
-  //     left:10,
-  //     position:"absolute"
-  //   }} />
-  //   <View style={{
-  //     backgroundColor:"gold",
-  //     height:100,
-  //     width:100
-  //   }} />
-  // </View>
+  // diiferent ways for multi-platform code writing
+  // way 1 - simply write code in StyleSheet
+  // way 2 - write code in like --> const textSeparateStyles = Platform.select({ios:{}, android:{}}) and 
+  // then spread textSeparateStyles in ---> text:{...textSeparateStyles} in StyleSheet and then simply use text class
+  // way 3 - definig diffrent files for each ios and android
 
   // *********** 8
-  // WelcomeScreen completed
+  // WelcomeScreen updated
   
   
   // *********** 9
-  // ViewImageScreen completed
+  // ListingsScreen made
+  // Card made
+  // <ListingsScreen />
   
 
-  return (<WelcomeScreen />);
+  // *********** 10
+  // ListingDetailsScreen made
+  // ListItem made
+  // <ListingDetailsScreen title="Red Jacket for sale" price="$100" image={require("./app/assets/jacket.jpg")} />
+
+
+  // *********** 11
+  // ViewImageScreen updated
+  
+
+
+  return (
+    <View></View>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    // alignItems: 'center',
+    // justifyContent: 'center',
     paddingTop:Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
 });
