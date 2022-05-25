@@ -7,8 +7,12 @@ import {MaterialCommunityIcons} from "@expo/vector-icons"
 
 import WelcomeScreen from "./app/screens/WelcomeScreen";
 import ViewImageScreen from "./app/screens/ViewImageScreen";
+import ListingsScreen from "./app/screens/ListingsScreen"
+import ListingDetailsScreen from "./app/screens/ListingDetailsScreen";
 
 import AppText from "./app/components/AppText"
+import AppButton from "./app/components/AppButton";
+
 
 export default function App() {
 
@@ -89,6 +93,7 @@ export default function App() {
 
   // *********** 5
   // made AppText
+  // made AppButton
 
   // *********** 6
   // Icons , go to Expo Icons
@@ -103,26 +108,37 @@ export default function App() {
   // way 3 - definig diffrent files for each ios and android
 
   // *********** 8
-  // 
+  // WelcomeScreen updated
   
   
   // *********** 9
-  // 
+  // ListingsScreen made
+  // Card made
+  // <ListingsScreen />
   
 
+  // *********** 10
+  // ListingDetailsScreen made
+  // ListItem made
+  // <ListingDetailsScreen title="Red Jacket for sale" price="$100" image={require("./app/assets/jacket.jpg")} />
+
+
+  // *********** 11
+  // ViewImageScreen updated
+  
+
+
   return (
-    <View style={styles.container}>
-      <AppText>Hello, This is React Native here!</AppText>
-    </View>
+    <View></View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    // alignItems: 'center',
+    // justifyContent: 'center',
     paddingTop:Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
 });
