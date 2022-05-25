@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
         backgroundColor:colors.white,
         overflow:"hidden",
         borderRadius:15,
-        marinBottom:20,
+        // marinBottom:20,
+        marginVertical:10
     },
     detailsContainer:{
         padding:20,
