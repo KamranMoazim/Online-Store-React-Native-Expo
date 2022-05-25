@@ -26,7 +26,7 @@ export default function ListingDetailsScreen({title, price, image}) {
 
 const styles = StyleSheet.create({
     detailsContainer:{
-        padding:20,
+        // padding:20,
     },
     image:{
         width:"100%",

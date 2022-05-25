@@ -1,23 +1,35 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
 import React from 'react'
+import { StyleSheet, Text, View, Image, TouchableHighlight } from 'react-native'
+import {gestureHandlerRootHOC, Swipeable} from "react-native-gesture-handler"
 
 import AppText from './AppText'
 import colors from '../config/colors'
 
 
-export default function ListItem({title, subTitle, image}) {
+const ListItem = ({title, subTitle, image, IconComponent, onPress, renderRightActions}) => {
   return (
-    <View style={styles.personDetails}>
-        <Image source={image} style={styles.image} />
-        <View style={{paddingHorizontal:15}}>
-            <AppText style={styles.title}>{title}</AppText>
-            <AppText style={styles.subTitle}>{subTitle}</AppText>
-        </View>
-    </View>
+    <Swipeable renderRightActions={renderRightActions}>
+        <TouchableHighlight underlayColor={colors.white} onPress={onPress}>
+            <View style={styles.personDetails}>
+                {IconComponent}
+                {image && <Image source={image} style={styles.image} />}
+                <View style={styles.detailsContainer}>
+                    <AppText style={styles.title}>{title}</AppText>
+                    {subTitle && <AppText style={styles.subTitle}>{subTitle}</AppText>}
+                </View>
+            </View>
+        </TouchableHighlight>
+    </Swipeable>
   )
 }
 
+export default ListItem;
+
 const styles = StyleSheet.create({
+    detailsContainer:{
+        paddingHorizontal:15,
+        justifyContent:"center",
+    },
     image:{
         height:70, 
         width:70, 
@@ -25,12 +37,15 @@ const styles = StyleSheet.create({
     },
     personDetails:{
         flexDirection:"row",
-        marginVertical:15,
+        paddingLeft:15,
+        width:"100%",
+        backgroundColor:colors.white,
+        paddingVertical:10
     },
     subTitle:{
         color:colors.medium
     },
     title:{
-        fontWeight:"500"
+        fontWeight:"600"
     }
 })
