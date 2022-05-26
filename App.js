@@ -12,6 +12,8 @@ import ViewImageScreen from "./app/screens/ViewImageScreen";
 import ListingsScreen from "./app/screens/ListingsScreen"
 import ListingDetailsScreen from "./app/screens/ListingDetailsScreen";
 import AccountScreen from "./app/screens/AccountScreen";
+import LoginScreen from "./app/screens/LoginScreen";
+import ListingEditScreen from "./app/screens/ListingEditScreen";
 import Screen from "./app/screens/Screen";
 
 import AppText from "./app/components/AppText"
@@ -25,148 +27,110 @@ import AppPicker from "./app/components/AppPicker";
 
 const App = gestureHandlerRootHOC(() => {
 
-  
-
 
   // *********** 1
-  // TextInput
-  // const [name, setName] = useState("");
-  // <TextInput
-  //   placeholder="First Name"
-  //   maxLength={4}
-  //   keyboardType="number-pad"
-  //   clearButtonMode="never"  // only works in IOS
-  //   secureTextEntry={true}
-  //   onChangeText={(text)=>setName(text)}
-  // />
-
+  // created Login Screen  ************ 
+  // const [email, setEmail] = useState("")
+  // const [password, setPassword] = useState("")
+  // return (
+  // <Screen style={styles.container}>
+  //     <Image style={styles.logo} source={require("../assets/logo.png")} />
+  //     <AppTextInput 
+  //         icon="email" 
+  //         placeholder="Email"
+  //         autoCapitalize="none"
+  //         autoCorrect={false}
+  //         keyboardType="email-address"
+  //         onChangeText={(text)=>{setEmail(text)}}
+  //     />
+  //     <AppTextInput 
+  //         icon="lock"
+  //         placeholder="Password"
+  //         autoCapitalize="none"
+  //         autoCorrect={false}
+  //         secureTextEntry={true}
+  //         onChangeText={(text)=>{setPassword(text)}}
+  //     />
+  //     <AppButton title="Login" onPress={()=>console.log(email, password)} />
+  // </Screen>
+  // )
 
   // *********** 2
-  //  created AppTextInput
-  // const AppTextInput = ({icon, ...otherProps}) => {
-  //   return (
-  //     <View style={styles.container}>
-  //         {icon && <MaterialCommunityIcons name={icon} size={20} color={colors.medium} style={styles.icon} />}
-  //         <TextInput {...otherProps} />
-  //     </View>
-  //   )
-  // }
+  // updated Login Screen with Formik
+  //   <Screen style={styles.container}>
+  //   <Image style={styles.logo} source={require("../assets/logo.png")} />
+  //   <Formik 
+  //       initialValues={{email:"", password:""}}
+  //       onSubmit = {(values) => {
+  //           console.log(values)
+  //       }}
+  //   >
+  //       { ({handleChange, handleSubmit}) => (
+  //           <>
+  //               <AppTextInput 
+  //                   icon="email" 
+  //                   placeholder="Email"
+  //                   autoCapitalize="none"
+  //                   autoCorrect={false}
+  //                   keyboardType="email-address"
+  //                   onChangeText={handleChange("email")}
+  //               />
+  //               <AppTextInput 
+  //                   icon="lock"
+  //                   placeholder="Password"
+  //                   autoCapitalize="none"
+  //                   autoCorrect={false}
+  //                   secureTextEntry={true}
+  //                   onChangeText={handleChange("password")}
+  //               />
+  //               <AppButton title="Login" onPress={handleSubmit} />
+  //           </>
+  //       ) }
+  //   </Formik>
+  // </Screen> 
 
 
   // *********** 3
-  // created defaultStyles file and updated AppTextInput and AppText
-
-  // *********** 4
-  // const [isNew, setIsNEw] = useState(false);
-  // <Switch value={isNew} onChange={(newValue)=>{setIsNEw(newValue)}} />
+  // added validation with Yup to LoginScreen
+  // const validationSchema = Yup.object().shape({
+  //     email:Yup.string().required().email().label("Email"),
+  //     password:Yup.string().required().min(4).label("Password"),
+  // })
   
-
+  // *********** 4
+  // created AppErrorMessage and added to LoginScreen
+  
+  
   // *********** 5
-  // installed ---> @react-native-picker/picker or not
-  // and created custom AppPicker
-  // const AppPicker = ({icon, placeholder, ...otherProps}) => {
-  //   const [showModal, setShowModal] = useState(false);
-  //   return (
-  //     <>
-  //         <TouchableWithoutFeedback onPress={() => setShowModal(true)}>
-  //             <View style={styles.container}>
-  //                 {icon && <MaterialCommunityIcons 
-  //                             name={icon} 
-  //                             size={20} 
-  //                             color={defaultStyles.colors.medium} 
-  //                             style={styles.icon} />}
-  //                 <AppText style={styles.text}>
-  //                     {placeholder}
-  //                 </AppText>
-  //                 <MaterialCommunityIcons name="chevron-down" size={20} color={defaultStyles.colors.medium} />
-  //             </View>
-  //         </TouchableWithoutFeedback>
-  //         <Modal visible={showModal}>
-  //             <AppButton 
-  //                 title="Close" 
-  //                 style={{width:"25%", alignSelf:"center"}} 
-  //                 onPress={() => setShowModal(false)} />
-  //         </Modal>
-  //     </>
-  //   )
-  // }
+  // updated AppErrorMessage and added touched to it
+  
 
 
   // *********** 6
-  // updating AppPicker by creating PickerItem
-  // ............
-  // const PickerItem = ({label, onPress}) => {
-  //   return (
-  //     <TouchableOpacity onPress={onPress}>
-  //         <AppText style={styles.text}>{label}</AppText>
-  //     </TouchableOpacity>
-  //   )
-  // }
-  // ............
-  // <Modal visible={showModal}>
-  // <AppButton 
-  //     title="Close" 
-  //     style={{width:"25%", alignSelf:"center"}} 
-  //     onPress={() => setShowModal(false)} 
-  // />
-  // <FlatList 
-  // data={items}
-  // keyExtractor={(item)=>item.value.toString() }
-  // renderItem={({item}) => <PickerItem label={item.label} onPress={()=>console.log(item)} />} />
-  // </Modal>
-
-
+  // created AppFormField and used in LoginScreen Form
+  
 
   // *********** 7
-  // more updation
-  // const categories = [
-  //   {label:"Furniture", value:1},
-  //   {label:"Clothing", value:2},
-  //   {label:"Cameras", value:3},
-  // ]
-  // const [category, setCategory] = useState(categories[0]);
-  // return (
-  //   <Screen>
-  //     <AppPicker 
-  //     selectedItem={category} onSelectItem={(item) => setCategory(item)} 
-  //     items={categories} 
-  //     icon="apps" placeholder="Category" />
-  //     <AppTextInput icon="email" placeholder="Email" />
-  //   </Screen>
-  // );
+  // created AppFormSubmitButton
+  
 
   // *********** 8
-  // 
+  // created AppForm and used in LoginScreen Form
   
   
   // *********** 9
-  // 
+  // created AppFormPicker
   
 
   // *********** 10
-  // 
+  // ListingEditScreen made
   
 
   // *********** 11
   // 
   
-
-  const categories = [
-    {label:"Furniture", value:1},
-    {label:"Clothing", value:2},
-    {label:"Cameras", value:3},
-  ]
-
-  const [category, setCategory] = useState(categories[0]);
-  
   return (
-    <Screen>
-      <AppPicker 
-      selectedItem={category} onSelectItem={(item) => setCategory(item)} 
-      items={categories} 
-      icon="apps" placeholder="Category" />
-      <AppTextInput icon="email" placeholder="Email" />
-    </Screen>
+    <ListingEditScreen />
   );
 })
 
