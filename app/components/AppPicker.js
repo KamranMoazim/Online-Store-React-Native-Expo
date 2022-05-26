@@ -28,7 +28,7 @@ const AppPicker = ({icon, selectedItem, onSelectItem, placeholder, items}) => {
                 <MaterialCommunityIcons name="chevron-down" size={20} color={defaultStyles.colors.medium} />
             </View>
         </TouchableWithoutFeedback>
-        <Modal visible={showModal}>
+        <Modal visible={showModal} animationType="fade">
             <AppButton 
                 title="Close" 
                 style={{width:"25%", alignSelf:"center"}} 
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
         marginRight:10,
     },
     text:{
-        color:defaultStyles.colors.dark,
+        color:defaultStyles.colors.medium,
         flex:1
     }
 })
