@@ -29,108 +29,52 @@ const App = gestureHandlerRootHOC(() => {
 
 
   // *********** 1
-  // created Login Screen  ************ 
-  // const [email, setEmail] = useState("")
-  // const [password, setPassword] = useState("")
-  // return (
-  // <Screen style={styles.container}>
-  //     <Image style={styles.logo} source={require("../assets/logo.png")} />
-  //     <AppTextInput 
-  //         icon="email" 
-  //         placeholder="Email"
-  //         autoCapitalize="none"
-  //         autoCorrect={false}
-  //         keyboardType="email-address"
-  //         onChangeText={(text)=>{setEmail(text)}}
-  //     />
-  //     <AppTextInput 
-  //         icon="lock"
-  //         placeholder="Password"
-  //         autoCapitalize="none"
-  //         autoCorrect={false}
-  //         secureTextEntry={true}
-  //         onChangeText={(text)=>{setPassword(text)}}
-  //     />
-  //     <AppButton title="Login" onPress={()=>console.log(email, password)} />
-  // </Screen>
-  // )
+  // updated ListItem by adding chevron-right
+  
 
   // *********** 2
-  // updated Login Screen with Formik
-  //   <Screen style={styles.container}>
-  //   <Image style={styles.logo} source={require("../assets/logo.png")} />
-  //   <Formik 
-  //       initialValues={{email:"", password:""}}
-  //       onSubmit = {(values) => {
-  //           console.log(values)
-  //       }}
-  //   >
-  //       { ({handleChange, handleSubmit}) => (
-  //           <>
-  //               <AppTextInput 
-  //                   icon="email" 
-  //                   placeholder="Email"
-  //                   autoCapitalize="none"
-  //                   autoCorrect={false}
-  //                   keyboardType="email-address"
-  //                   onChangeText={handleChange("email")}
-  //               />
-  //               <AppTextInput 
-  //                   icon="lock"
-  //                   placeholder="Password"
-  //                   autoCapitalize="none"
-  //                   autoCorrect={false}
-  //                   secureTextEntry={true}
-  //                   onChangeText={handleChange("password")}
-  //               />
-  //               <AppButton title="Login" onPress={handleSubmit} />
-  //           </>
-  //       ) }
-  //   </Formik>
-  // </Screen> 
+  // updated ListItem and Card by adding numberOfLines
 
 
   // *********** 3
-  // added validation with Yup to LoginScreen
-  // const validationSchema = Yup.object().shape({
-  //     email:Yup.string().required().email().label("Email"),
-  //     password:Yup.string().required().min(4).label("Password"),
-  // })
+  // updated ListingEditScreen by updating AppFormField --> AppTextInput & AppFormPicker --> AppPicker  
+  
   
   // *********** 4
-  // created AppErrorMessage and added to LoginScreen
+  // updated AppPicker for categories and added flexibility to change AppPicker by giving 
+  // PickerItemComponent in ListingEditScreen of your own 
   
   
   // *********** 5
-  // updated AppErrorMessage and added touched to it
-  
+  // created CategoryPickerItem and added numberOfColumns capability  AppFormPicker --> AppPicker
 
 
   // *********** 6
-  // created AppFormField and used in LoginScreen Form
+  // 
   
 
   // *********** 7
-  // created AppFormSubmitButton
+  // 
   
 
   // *********** 8
-  // created AppForm and used in LoginScreen Form
+  // 
   
   
   // *********** 9
-  // created AppFormPicker
+  // 
   
 
   // *********** 10
-  // ListingEditScreen made
+  // 
   
 
   // *********** 11
   // 
+
   
   return (
-    <ListingEditScreen />
+    <></>
   );
 })
 
