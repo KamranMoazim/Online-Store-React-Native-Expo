@@ -1,10 +1,13 @@
-import {useState} from "react"
+import {useState, useEffect} from "react"
 import { StyleSheet, View, Platform, StatusBar,
-  Dimensions, Text, TextInput, Switch, Picker
+  Dimensions, Text, TextInput, Switch, Picker, Image
  } from 'react-native';
 import {useDimensions, useDeviceOrientation, } from "@react-native-community/hooks"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
+import * as ImagePicker from "expo-image-picker";
+import * as Permissions from "expo-permissions";
+
 
 
 import WelcomeScreen from "./app/screens/WelcomeScreen";
@@ -23,50 +26,135 @@ import Icon from "./app/components/Icon";
 import ListItem from "./app/components/ListItem";
 import AppTextInput from "./app/components/AppTextInput";
 import AppPicker from "./app/components/AppPicker";
+import AppImageInput from "./app/components/AppImageInput";
+import AppImageInputList from "./app/components/AppImageInputList";
 
 
 const App = gestureHandlerRootHOC(() => {
 
 
   // *********** 1
-  // updated ListItem by adding chevron-right
-  
+  // way-1 we are going to use this one
+  // expo install expo-image-picker
+  // const requestPermission = async () => {
+  //   const {granted} = await ImagePicker.getMediaLibraryPermissionsAsync();
+  //   if(!granted) alert("You need to enable permission to access you Images!")
+  // }
+  // useEffect(() => {
+  //   requestPermission();
+  // }, [])
+
 
   // *********** 2
-  // updated ListItem and Card by adding numberOfLines
-
+  // way-2
+  // expo install expo-permissions
+  // const requestPermission = async () => {
+  //   const {granted} = await Permissions.askAsync(Permissions.CAMERA, Permissions.AUDIO_RECORDING);
+  //   if(!granted) alert("You need to enable permission to access!")
+  // }
+  // useEffect(() => {
+  //   requestPermission();
+  // }, [])
+  
 
   // *********** 3
-  // updated ListingEditScreen by updating AppFormField --> AppTextInput & AppFormPicker --> AppPicker  
-  
+  const [imageUri, setImageUri] = useState();
+  // const selectImage = async () => {
+  //   try {
+  //     const result = await ImagePicker.launchImageLibraryAsync();
+  //     if(!result.cancelled){
+  //       setImageUri(result.uri);
+  //     }
+  //   } catch (error) {
+  //     console.log("error ", error)
+  //   }
+  // }
+  // <Screen>
+  //     <AppButton title="Select Image" onPress={selectImage} />
+  //     <Image source={{uri:imageUri}} style={{height:100, width:100}} />
+  //   </Screen>
   
   // *********** 4
-  // updated AppPicker for categories and added flexibility to change AppPicker by giving 
-  // PickerItemComponent in ListingEditScreen of your own 
+  // created AppImageInput
+  // <Image source={{uri:imageUri, height:100, width:100}} />
+  // <AppImageInput onChangeImage={selectImage} />
   
   
   // *********** 5
-  // created CategoryPickerItem and added numberOfColumns capability  AppFormPicker --> AppPicker
-
+  // updated AppImageInput
+//   const AppImageInput = ({onChangeImage, imageUri}) => {
+//     handlePress = () => {
+//         if(!imageUri){
+//             selectImage()
+//         } else {
+//             Alert.alert("Delete", "Are you sure you wants to DELETE this Image ? ", [
+//                 {text:"Yes", onPress:()=>onChangeImage(null)},
+//                 {text:"No"},
+//             ])
+//         }
+//     }
+//     const selectImage = async () => {
+//         try {
+//             const result = await ImagePicker.launchImageLibraryAsync({
+//                 mediaTypes:ImagePicker.MediaTypeOptions.Images,
+//                 quality:0.5
+//             });
+//             if(!result.cancelled){
+//                 onChangeImage(result.uri);
+//             }
+//         } catch (error) {
+//             console.log("error ", error)
+//         }
+//     }
+//   return (
+//       <TouchableWithoutFeedback onPress={onPress}>
+//         <View style={styles.container}>
+//             <Image source={{uri:imageUri}} style={{height:100,width:100}} />
+//             <MaterialCommunityIcons name='camera' size={40} />
+//         </View>
+//     </TouchableWithoutFeedback>
+//   )
+// }
+  
 
   // *********** 6
-  // 
+  // created ImageInputList
+  // const [imageUris, setImageUris] = useState([]);
+  // created AppImageInputList
+  // const handleRemove = (uri) => {
+  //   setImageUris(imageUris.filter((imageUri)=>imageUri!==uri))
+  // }
+  // const handleAdd = (uri) => {
+  //   setImageUris([...imageUris, uri]);
+  // }
+  // <AppImageInputList imageUris={imageUris} onRemoveImage={handleRemove} onAddImage={handleAdd} />
   
 
   // *********** 7
-  // 
+  // created AppFormImageInputList
   
 
   // *********** 8
-  // 
+  // updated ListingEditScreen by adding AppFormImageInputList
   
   
   // *********** 9
-  // 
+  // added Location in ListingEditScreen
+  // const [location, setLocation] = useState();
+  // const getLocation = async () => {
+  //     const {granted} = await Location.requestForegroundPermissionsAsync();
+  //     if(!granted) return;
+  //     const {coords:{latitude, longitude}} = await Location.getLastKnownPositionAsync();
+  //     setLocation({longitude, latitude});
+  // }
+  // useEffect(()=>{
+  //     getLocation();
+  // },[])
+  // console.log(location)
   
 
   // *********** 10
-  // 
+  // created hook ---> useLocation and used in ListingEditScreen
   
 
   // *********** 11
@@ -74,7 +162,7 @@ const App = gestureHandlerRootHOC(() => {
 
   
   return (
-    <></>
+    <ListingEditScreen />
   );
 })
 
