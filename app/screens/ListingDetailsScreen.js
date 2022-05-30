@@ -5,13 +5,14 @@ import colors from '../config/colors'
 import AppText from '../components/AppText'
 import ListItem from '../components/ListItem'
 
-export default function ListingDetailsScreen({title, price, image}) {
+export default function ListingDetailsScreen({route}) {
+    const {title, price, image} = route.params
   return (
     <View>
         <Image style={styles.image} source={image} />
         <View style={styles.detailsContainer}>
             <AppText style={styles.title}>{title}</AppText>
-            <AppText style={styles.price}>{price}</AppText>
+            <AppText style={styles.price}>${price}</AppText>
             <View style={styles.userDetails}>
                 <ListItem 
                     image={require("../assets/mosh.jpg")} 
@@ -26,7 +27,7 @@ export default function ListingDetailsScreen({title, price, image}) {
 
 const styles = StyleSheet.create({
     detailsContainer:{
-        // padding:20,
+        padding:20,
     },
     image:{
         width:"100%",

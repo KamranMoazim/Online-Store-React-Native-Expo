@@ -5,6 +5,7 @@ import Card from '../components/Card'
 import ListItem from '../components/ListItem'
 import ListItemSeparator from '../components/ListItemSeparator'
 import colors from '../config/colors'
+import routes from '../navigation/routes'
 import Screen from './Screen'
 
 
@@ -23,13 +24,19 @@ const listings = [
 }
 ]
 
-const ItemsScreen = () => {
+const ItemsScreen = ({navigation}) => {
 
   return (
     <Screen style={styles.container}>
       <FlatList 
         data={listings}
-        renderItem={({item}) => <Card title={item.title} subTitle={"$" + item.price} image={item.image} />}
+        renderItem={({item}) => (
+        <Card 
+            title={item.title} 
+            subTitle={"$" + item.price} 
+            image={item.image}
+            onPress={()=>navigation.navigate(routes.LISTING_DETAILS, item)}
+             />)}
         keyExtractor={(item)=>item.id.toString()}
       />
     </Screen>
@@ -43,6 +50,6 @@ const styles = StyleSheet.create({
         flex:1,
         backgroundColor:colors.light,
         padding:20,
-        paddingTop:80
+        // paddingTop:80
     }
 })

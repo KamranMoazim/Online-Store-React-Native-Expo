@@ -1,13 +1,13 @@
 import {useState, useEffect} from "react"
-import { StyleSheet, View, Platform, StatusBar,
-  Dimensions, Text, TextInput, Switch, Picker, Image
- } from 'react-native';
+import { StyleSheet, View, Platform, StatusBar, Dimensions, Text, TextInput, Switch, Picker, Image } from 'react-native';
 import {useDimensions, useDeviceOrientation, } from "@react-native-community/hooks"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
-
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import {NavigationContainer, useNavigation} from "@react-navigation/native"
 
 
 import WelcomeScreen from "./app/screens/WelcomeScreen";
@@ -29,132 +29,147 @@ import AppPicker from "./app/components/AppPicker";
 import AppImageInput from "./app/components/AppImageInput";
 import AppImageInputList from "./app/components/AppImageInputList";
 
+import AuthNavigator from "./app/navigation/AuthNavigator";
+import AppNavigator from "./app/navigation/AppNavigator";
+import navigationTheme from "./app/navigation/navigationTheme";
+
+
+
 
 const App = gestureHandlerRootHOC(() => {
 
 
   // *********** 1
-  // way-1 we are going to use this one
-  // expo install expo-image-picker
-  // const requestPermission = async () => {
-  //   const {granted} = await ImagePicker.getMediaLibraryPermissionsAsync();
-  //   if(!granted) alert("You need to enable permission to access you Images!")
+  // const Tweets = ({navigation}) => (
+  //   // this navigation prop is only available to components which are directly linked with Navigator. 
+  //   // for more inner childs we need to useNavigation hook like we did in Link Component
+  //   <Screen>
+  //     <Text>
+  //       Tweets
+  //     </Text>
+  //     <AppButton title="Tweet Details" onPress={()=>navigation.navigate("TweetDetails", {id:1})} />
+  //   </Screen>
+  // )
+  // const TweetDetails = ({route}) => (
+  //   // here as we are getting route from Tweet by onPress similarly through simply props
+  //   // if we want it in more inner child we can use useRoute as we did in useNavigation
+  //   <Screen>
+  //     <Text>
+  //       Tweet Details {route.params.id}
+  //     </Text>
+  //     <Link />
+  //   </Screen>
+  // )
+  // const Link = () => {
+  //   const {navigate} = useNavigation()
+  //   return (<AppButton title="Tweets" onPress={()=>navigate("Tweets")} />)
   // }
-  // useEffect(() => {
-  //   requestPermission();
-  // }, [])
+  // const Stack = createNativeStackNavigator();
+  // const StackNavigator = () => (
+  //   <Stack.Navigator
+  //   screenOptions={
+  //     {
+  //       headerStyle:{
+  //         backgroundColor:"purple"
+  //       },
+  //       headerTintColor:"white",
+  //     }
+  //   }
+  //    initialRouteName="Tweets">
+  //     <Stack.Screen 
+  //     name="Tweets" 
+  //     component={Tweets}
+  //     options={{ // or you can set these a lot of options in screenOptions
+  //       headerStyle:{
+  //         backgroundColor:"tomato"
+  //       },
+  //       headerTintColor:"white",
+  //       headerShown:false
+  //     }}
+  //     />
+  //     <Stack.Screen 
+  //     // options={{title:"Hello work"}}  // way 1 
+  //     // options={() => ({title:"Hello work2"})}  // way 2
+  //     // options={({route}) => ({title:"hehe"+route.params.id})}  // way 3 --> to get access to route or navigation or Many other things
+  //     name="TweetDetails" 
+  //     component={TweetDetails} />
+  //   </Stack.Navigator>
+  // )
+  // <NavigationContainer> 
+  //   <StackNavigator />
+  // </NavigationContainer> 
 
 
   // *********** 2
-  // way-2
-  // expo install expo-permissions
-  // const requestPermission = async () => {
-  //   const {granted} = await Permissions.askAsync(Permissions.CAMERA, Permissions.AUDIO_RECORDING);
-  //   if(!granted) alert("You need to enable permission to access!")
-  // }
-  // useEffect(() => {
-  //   requestPermission();
-  // }, [])
+  // const Tweets = ({navigation}) => (
+  //   <Screen>
+  //     <Text>
+  //       Tweets
+  //     </Text>
+  //     <AppButton title="Tweet Details" onPress={()=>navigation.navigate("TweetDetails", {id:1})} />
+  //   </Screen>
+  // )
+  // const Account = () => <Screen><AppText>Account</AppText></Screen>
+  // const Tab = createBottomTabNavigator()
+  // const TabNavigator = () => (
+  //   <Tab.Navigator
+  //     screenOptions={{
+  //       tabBarActiveBackgroundColor:"tomato",
+  //       tabBarActiveTintColor:"white",
+  //       tabBarInactiveBackgroundColor:"#ccc",
+  //       tabBarInactiveTintColor:"grey"
+  //     }}
+  //   >
+  //     <Tab.Screen 
+  //     name="Feed" 
+  //     // component={StackNavigator}
+  //     component={Tweets}
+  //     options={{
+  //       tabBarIcon:({color, size})=><MaterialCommunityIcons size={size} name="home" color={color} />
+  //     }}
+  //     />
+  //     <Tab.Screen 
+  //     name="Account" 
+  //     component={Account}
+  //     options={{
+  //       tabBarIcon:({color, size})=><MaterialCommunityIcons size={size} name="account" color={color} />
+  //     }}
+  //     />
+  //   </Tab.Navigator>
+  // )
   
 
   // *********** 3
-  const [imageUri, setImageUri] = useState();
-  // const selectImage = async () => {
-  //   try {
-  //     const result = await ImagePicker.launchImageLibraryAsync();
-  //     if(!result.cancelled){
-  //       setImageUri(result.uri);
-  //     }
-  //   } catch (error) {
-  //     console.log("error ", error)
-  //   }
-  // }
-  // <Screen>
-  //     <AppButton title="Select Image" onPress={selectImage} />
-  //     <Image source={{uri:imageUri}} style={{height:100, width:100}} />
-  //   </Screen>
+  // created and completed AuthNavigator
+  
   
   // *********** 4
-  // created AppImageInput
-  // <Image source={{uri:imageUri, height:100, width:100}} />
-  // <AppImageInput onChangeImage={selectImage} />
+  // applied navigationTheme
   
   
   // *********** 5
-  // updated AppImageInput
-//   const AppImageInput = ({onChangeImage, imageUri}) => {
-//     handlePress = () => {
-//         if(!imageUri){
-//             selectImage()
-//         } else {
-//             Alert.alert("Delete", "Are you sure you wants to DELETE this Image ? ", [
-//                 {text:"Yes", onPress:()=>onChangeImage(null)},
-//                 {text:"No"},
-//             ])
-//         }
-//     }
-//     const selectImage = async () => {
-//         try {
-//             const result = await ImagePicker.launchImageLibraryAsync({
-//                 mediaTypes:ImagePicker.MediaTypeOptions.Images,
-//                 quality:0.5
-//             });
-//             if(!result.cancelled){
-//                 onChangeImage(result.uri);
-//             }
-//         } catch (error) {
-//             console.log("error ", error)
-//         }
-//     }
-//   return (
-//       <TouchableWithoutFeedback onPress={onPress}>
-//         <View style={styles.container}>
-//             <Image source={{uri:imageUri}} style={{height:100,width:100}} />
-//             <MaterialCommunityIcons name='camera' size={40} />
-//         </View>
-//     </TouchableWithoutFeedback>
-//   )
-// }
-  
+  // created and completed AppNavigator
+
 
   // *********** 6
-  // created ImageInputList
-  // const [imageUris, setImageUris] = useState([]);
-  // created AppImageInputList
-  // const handleRemove = (uri) => {
-  //   setImageUris(imageUris.filter((imageUri)=>imageUri!==uri))
-  // }
-  // const handleAdd = (uri) => {
-  //   setImageUris([...imageUris, uri]);
-  // }
-  // <AppImageInputList imageUris={imageUris} onRemoveImage={handleRemove} onAddImage={handleAdd} />
+  // created and completed FeedNavigator
   
 
   // *********** 7
-  // created AppFormImageInputList
+  // created and used NewListingButton in AppNavigator
   
 
   // *********** 8
-  // updated ListingEditScreen by adding AppFormImageInputList
+  // 
   
   
   // *********** 9
-  // added Location in ListingEditScreen
-  // const [location, setLocation] = useState();
-  // const getLocation = async () => {
-  //     const {granted} = await Location.requestForegroundPermissionsAsync();
-  //     if(!granted) return;
-  //     const {coords:{latitude, longitude}} = await Location.getLastKnownPositionAsync();
-  //     setLocation({longitude, latitude});
-  // }
-  // useEffect(()=>{
-  //     getLocation();
-  // },[])
-  // console.log(location)
+  // 
+  
   
 
   // *********** 10
-  // created hook ---> useLocation and used in ListingEditScreen
+  // 
   
 
   // *********** 11
@@ -162,7 +177,10 @@ const App = gestureHandlerRootHOC(() => {
 
   
   return (
-    <ListingEditScreen />
+    <NavigationContainer theme={navigationTheme}>
+      {/* <AuthNavigator /> */}
+      <AppNavigator />
+    </NavigationContainer>
   );
 })
 
