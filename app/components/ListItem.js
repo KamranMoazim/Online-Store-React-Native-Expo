@@ -30,7 +30,7 @@ export default ListItem;
 const styles = StyleSheet.create({
     detailsContainer:{
         flex:1,
-        paddingHorizontal:15,
+        paddingHorizontal:10,
         justifyContent:"center",
     },
     image:{
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     personDetails:{
         alignItems:"center",
         flexDirection:"row",
-        paddingLeft:15,
+        paddingLeft:5,
         width:"100%",
         backgroundColor:colors.white,
         paddingVertical:10

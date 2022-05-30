@@ -28,8 +28,8 @@ const menuItems = [
 
 export default function AccountScreen() {
   return (
-    <Screen style={styles.screen}>
-        <View style={styles.container}>
+    <Screen style={[styles.screen, {paddingTop:0}]}>
+        <View >
             <ListItem 
                 title="Mosh Hamedani" 
                 subTitle="mosh@domain.com" 
@@ -61,7 +61,7 @@ export default function AccountScreen() {
 
 const styles = StyleSheet.create({
     container:{
-        marginVertical:20
+        marginVertical:20,
     },
     screen:{
         backgroundColor:colors.light

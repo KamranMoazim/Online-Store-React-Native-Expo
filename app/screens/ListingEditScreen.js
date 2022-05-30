@@ -41,7 +41,7 @@ const categories = [
 const ListingEditScreen = () => {
 
     
-    const {location} = useLocation();
+    // const {location} = useLocation();
 
 
 
