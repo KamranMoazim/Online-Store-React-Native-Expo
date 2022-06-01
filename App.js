@@ -40,141 +40,83 @@ const App = gestureHandlerRootHOC(() => {
 
 
   // *********** 1
-  // const Tweets = ({navigation}) => (
-  //   // this navigation prop is only available to components which are directly linked with Navigator. 
-  //   // for more inner childs we need to useNavigation hook like we did in Link Component
-  //   <Screen>
-  //     <Text>
-  //       Tweets
-  //     </Text>
-  //     <AppButton title="Tweet Details" onPress={()=>navigation.navigate("TweetDetails", {id:1})} />
-  //   </Screen>
-  // )
-  // const TweetDetails = ({route}) => (
-  //   // here as we are getting route from Tweet by onPress similarly through simply props
-  //   // if we want it in more inner child we can use useRoute as we did in useNavigation
-  //   <Screen>
-  //     <Text>
-  //       Tweet Details {route.params.id}
-  //     </Text>
-  //     <Link />
-  //   </Screen>
-  // )
-  // const Link = () => {
-  //   const {navigate} = useNavigation()
-  //   return (<AppButton title="Tweets" onPress={()=>navigate("Tweets")} />)
-  // }
-  // const Stack = createNativeStackNavigator();
-  // const StackNavigator = () => (
-  //   <Stack.Navigator
-  //   screenOptions={
-  //     {
-  //       headerStyle:{
-  //         backgroundColor:"purple"
-  //       },
-  //       headerTintColor:"white",
-  //     }
-  //   }
-  //    initialRouteName="Tweets">
-  //     <Stack.Screen 
-  //     name="Tweets" 
-  //     component={Tweets}
-  //     options={{ // or you can set these a lot of options in screenOptions
-  //       headerStyle:{
-  //         backgroundColor:"tomato"
-  //       },
-  //       headerTintColor:"white",
-  //       headerShown:false
-  //     }}
-  //     />
-  //     <Stack.Screen 
-  //     // options={{title:"Hello work"}}  // way 1 
-  //     // options={() => ({title:"Hello work2"})}  // way 2
-  //     // options={({route}) => ({title:"hehe"+route.params.id})}  // way 3 --> to get access to route or navigation or Many other things
-  //     name="TweetDetails" 
-  //     component={TweetDetails} />
-  //   </Stack.Navigator>
-  // )
-  // <NavigationContainer> 
-  //   <StackNavigator />
-  // </NavigationContainer> 
-
+  // installed apisauce and created client.js
+  
 
   // *********** 2
-  // const Tweets = ({navigation}) => (
-  //   <Screen>
-  //     <Text>
-  //       Tweets
-  //     </Text>
-  //     <AppButton title="Tweet Details" onPress={()=>navigation.navigate("TweetDetails", {id:1})} />
-  //   </Screen>
-  // )
-  // const Account = () => <Screen><AppText>Account</AppText></Screen>
-  // const Tab = createBottomTabNavigator()
-  // const TabNavigator = () => (
-  //   <Tab.Navigator
-  //     screenOptions={{
-  //       tabBarActiveBackgroundColor:"tomato",
-  //       tabBarActiveTintColor:"white",
-  //       tabBarInactiveBackgroundColor:"#ccc",
-  //       tabBarInactiveTintColor:"grey"
-  //     }}
-  //   >
-  //     <Tab.Screen 
-  //     name="Feed" 
-  //     // component={StackNavigator}
-  //     component={Tweets}
-  //     options={{
-  //       tabBarIcon:({color, size})=><MaterialCommunityIcons size={size} name="home" color={color} />
-  //     }}
-  //     />
-  //     <Tab.Screen 
-  //     name="Account" 
-  //     component={Account}
-  //     options={{
-  //       tabBarIcon:({color, size})=><MaterialCommunityIcons size={size} name="account" color={color} />
-  //     }}
-  //     />
-  //   </Tab.Navigator>
-  // )
+  // created listings.js
+  
   
 
   // *********** 3
-  // created and completed AuthNavigator
-  
+  // get listings from Backend in ListingsScreen
+
   
   // *********** 4
-  // applied navigationTheme
+  // react native debugger toolbar install and then add your localport number and then add connect 
+  // your app to it via remote debugger toolbar
   
   
   // *********** 5
-  // created and completed AppNavigator
-
+  // added ErrorHandling in ListingsScreen
+  
 
   // *********** 6
-  // created and completed FeedNavigator
+  // stimulating slow Connection
   
 
   // *********** 7
-  // created and used NewListingButton in AppNavigator
+  // showing ActivityIndicator ---> i.e loading 
   
 
   // *********** 8
+  // building custom ActivityIndicator using lottiefiles.com
+  // be careful while using lottie-react-native(it supports only lotties of v2) 
+  // expo install lottie-react-native
   // 
   
   
   // *********** 9
-  // 
+  // created and added AppActivityIndicator in ListingsScreen
   
   
 
   // *********** 10
-  // 
+  //   const [listings, setListings] = useState([]);
+  // const [error, setError] = useState(false);
+  // const [loading, setLoading] = useState(false);
+  // const loadListings = async () => {
+  //   setLoading(true);
+  //   const response = await listingsApi.getListings();
+  //   setLoading(false);
+  //   if(!response.ok) return setError(true)
+  //   setError(false);
+  //   setListings(response.data);
+  // }
+  // !!!!!! created useApi hook
   
 
   // *********** 11
-  // 
+  // created addListing in listings.js
+  
+  
+  // *********** 12
+  // updated addListing by adding onUploadProgressFunc
 
+
+  // *********** 13
+  // building UploadScreen
+
+
+  // *********** 14
+  // added progress bar to UploadScreen and installed react-native-progress
+
+
+  // *********** 15
+  // added Done animation in UploadScreen
+  
+  // *********** 16
+  // updated AppFormField
   
   return (
     <NavigationContainer theme={navigationTheme}>

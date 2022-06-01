@@ -6,10 +6,13 @@ import AppText from '../components/AppText'
 import ListItem from '../components/ListItem'
 
 export default function ListingDetailsScreen({route}) {
-    const {title, price, image} = route.params
+    const {title, price, images} = route.params
+
+    // console.log(title, price, images[0].url)
+
   return (
     <View>
-        <Image style={styles.image} source={image} />
+        <Image style={styles.image} source={{uri:images[0].url}} />
         <View style={styles.detailsContainer}>
             <AppText style={styles.title}>{title}</AppText>
             <AppText style={styles.price}>${price}</AppText>
