@@ -1,40 +1,48 @@
-import React from 'react'
-import { StyleSheet, Text, View, FlatList } from 'react-native'
+import React,{useEffect, useState} from 'react'
+import { StyleSheet , FlatList, ActivityIndicator } from 'react-native'
 
+import AppErrorMessage from '../components/AppErrorMessage'
+import AppActivityIndicator from '../components/AppActivityIndicator'
+import AppButton from '../components/AppButton'
 import Card from '../components/Card'
-import ListItem from '../components/ListItem'
-import ListItemSeparator from '../components/ListItemSeparator'
 import colors from '../config/colors'
 import routes from '../navigation/routes'
 import Screen from './Screen'
 
+import listingsApi from '../api/listings'
+import useApi from '../hooks/useApi'
 
-const listings = [
-  {
-    id:1,
-    title:"Red Jacket",
-    price:"100",
-    image:`${require("../assets/jacket.jpg")}`
-  },
-  {
-    id:2,
-    title:"Couchh in Great Condition",
-    price:"900",
-    image:`${require("../assets/couch.jpg")}`
-}
-]
 
-const ItemsScreen = ({navigation}) => {
+
+
+const ListingsScreen = ({navigation}) => {
+
+  const {data:listings, loading, error, request:loadListings} = useApi(listingsApi.getListings)
+
+  // const loadListings = request;
+  // console.log(listings)
+
+  useEffect(() => {
+    loadListings()
+  }, [])
+  
 
   return (
     <Screen style={styles.container}>
+      {error && <>
+        <AppErrorMessage visible={error} error="Couldn't retrieve Listings!" />
+        <AppButton onPress={loadListings} title="Retry" />
+      </> }
+      {/* <ActivityIndicator animating={loading} size="large" /> */}
+      <AppActivityIndicator visible={loading} />
       <FlatList 
         data={listings}
         renderItem={({item}) => (
         <Card 
             title={item.title} 
             subTitle={"$" + item.price} 
-            image={item.image}
+            imageUrl={item.images[0].url}
+            // imageUrl={item.images[0].thumbnailUrl}
             onPress={()=>navigation.navigate(routes.LISTING_DETAILS, item)}
              />)}
         keyExtractor={(item)=>item.id.toString()}
@@ -43,7 +51,7 @@ const ItemsScreen = ({navigation}) => {
   )
 }
 
-export default ItemsScreen
+export default ListingsScreen
 
 const styles = StyleSheet.create({
     container:{
