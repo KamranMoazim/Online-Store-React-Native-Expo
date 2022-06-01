@@ -9,7 +9,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {NavigationContainer, useNavigation} from "@react-navigation/native"
 
-
+// @react-navigation/native-stack
 import WelcomeScreen from "./app/screens/WelcomeScreen";
 import ViewImageScreen from "./app/screens/ViewImageScreen";
 import ListingsScreen from "./app/screens/ListingsScreen"
@@ -17,6 +17,7 @@ import ListingDetailsScreen from "./app/screens/ListingDetailsScreen";
 import AccountScreen from "./app/screens/AccountScreen";
 import LoginScreen from "./app/screens/LoginScreen";
 import ListingEditScreen from "./app/screens/ListingEditScreen";
+import AppOfflineNotice from "./app/components/AppOfflineNotice";
 import Screen from "./app/screens/Screen";
 
 import AppText from "./app/components/AppText"
@@ -35,94 +36,89 @@ import navigationTheme from "./app/navigation/navigationTheme";
 
 
 
+// import NetInfo, {useNetInfo} from "@react-native-community/netinfo"
+// import AsyncStorage from "@react-native-community/async-storage"
+
+
 
 const App = gestureHandlerRootHOC(() => {
 
 
   // *********** 1
-  // installed apisauce and created client.js
-  
+  // following are OFFLINE Strategies, the more you go down the more it gets complex
+  // 1. Notify Users
+  // 2. Disable Features
+  // 3. Cache Data
+  // 4. Store user actions
 
   // *********** 2
-  // created listings.js
-  
-  
+  // expo install @react-native-community/netinfo   ---> to get connection infromation
+  // NetInfo.fetch().then((netInfo)=>console.log(netInfo))      // will called only once
+  // NetInfo.addEventListener((netInfo)=>console.log(netInfo))  // will called again and again  // you also takecare of unsubscribing
+  // const netInfo = useNetInfo()  // for functional components
 
   // *********** 3
-  // get listings from Backend in ListingsScreen
+  // persistence storage
+  // 1. AsyncStorage
+  // 2. SecureStore
+  // 3. SQLite
 
-  
   // *********** 4
-  // react native debugger toolbar install and then add your localport number and then add connect 
-  // your app to it via remote debugger toolbar
-  
-  
+  // AsyncStorage
+  // npm install @react-native-async-storage/async-storage
+  // const demo = async () => {
+  //   try { // we are using try-catch becuase we DONT know whether there is space available in phone or not 
+  //     await AsyncStorage.setItem("person", JSON.stringify({id:1}))
+  //     const value = AsyncStorage.getItem("person");
+  //     const person = JSON.parse(value)
+  //     console.log(person)
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
+  // via debugger you can view AsyncStorage
+
   // *********** 5
-  // added ErrorHandling in ListingsScreen
-  
+  // Caching Data
+  // to cache data we must first introduce a CACHING LAYER that do following
+  // 1. serialize/deserialize (stringify/parse)
+  // 2. apply timestamps
+  // 3. remove expired items
 
   // *********** 6
-  // stimulating slow Connection
-  
+  // created cache.js
 
   // *********** 7
-  // showing ActivityIndicator ---> i.e loading 
-  
+  // updated client.js
 
   // *********** 8
-  // building custom ActivityIndicator using lottiefiles.com
-  // be careful while using lottie-react-native(it supports only lotties of v2) 
-  // expo install lottie-react-native
-  // 
-  
-  
+  // npm i react-native-expo-image-cache expo-blur   --> for image caching
+  // updated Card Component and ListingDetailsScreen
+
   // *********** 9
-  // created and added AppActivityIndicator in ListingsScreen
-  
-  
+  // storing user actions when offline
+  // better to avoid it and if you want it at any cost then
+  // just google it and better to use firebase or realm.io
 
   // *********** 10
-  //   const [listings, setListings] = useState([]);
-  // const [error, setError] = useState(false);
-  // const [loading, setLoading] = useState(false);
-  // const loadListings = async () => {
-  //   setLoading(true);
-  //   const response = await listingsApi.getListings();
-  //   setLoading(false);
-  //   if(!response.ok) return setError(true)
-  //   setError(false);
-  //   setListings(response.data);
-  // }
-  // !!!!!! created useApi hook
-  
+  // created AppOfflineNotice and used it in App.js
+
 
   // *********** 11
-  // created addListing in listings.js
-  
-  
   // *********** 12
-  // updated addListing by adding onUploadProgressFunc
-
-
   // *********** 13
-  // building UploadScreen
-
-
   // *********** 14
-  // added progress bar to UploadScreen and installed react-native-progress
-
-
   // *********** 15
-  // added Done animation in UploadScreen
-  
-  // *********** 16
-  // updated AppFormField
+
   
   return (
-    <NavigationContainer theme={navigationTheme}>
-      {/* <AuthNavigator /> */}
-      <AppNavigator />
-    </NavigationContainer>
+    <>
+      <AppOfflineNotice />
+      <NavigationContainer theme={navigationTheme}>
+        {/* <AuthNavigator /> */}
+        <AppNavigator />
+      </NavigationContainer>
+    </>
   );
 })
 
