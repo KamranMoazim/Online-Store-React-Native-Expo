@@ -12,6 +12,7 @@ import authApi from "../api/auth"
 
 import AuthContext from '../Contexts/AuthContext';
 import authStorage from "../utils/authStore"
+import useAuth from '../hooks/useAuth';
 
 const validationSchema = Yup.object().shape({
     email:Yup.string().required().email().label("Email"),
@@ -21,20 +22,13 @@ const validationSchema = Yup.object().shape({
 const LoginScreen = () => {
 
     const [loginFailed, setLoginFailed] = useState(false);
-    const authContext = useContext(AuthContext)
+    const {logIn} = useAuth()
 
     const handleSubmit = async ({email, password}) => {
         const response = await authApi.login(email, password);
-        // console.log(email)
-        // console.log(password)
-        // console.log(response)
         if(!response.ok) return setLoginFailed(true);
         setLoginFailed(false)
-        // console.log(response)
-        const user = jwtDecode(response.data);
-        // console.log(user)
-        authContext.setUser(user);
-        await authStorage.storeToken(response.data)
+        logIn(response.data)
     }
 
   return (

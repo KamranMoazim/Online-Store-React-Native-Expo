@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react"
+import React, {useState} from "react"
 import { StyleSheet, View, Platform, StatusBar, Dimensions, Text, TextInput, Switch, Picker, Image } from 'react-native';
 import {useDimensions, useDeviceOrientation, } from "@react-native-community/hooks"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
@@ -10,7 +10,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {NavigationContainer, useNavigation} from "@react-navigation/native"
 // import {AppLoading} from "expo"
 import AppLoading from 'expo-app-loading';
-import jwtDecode from "jwt-decode"
 
 
 // @react-navigation/native-stack
@@ -60,10 +59,9 @@ const App = gestureHandlerRootHOC(() => {
   // *********** 3
   // npm i jwt-decode, create state using useState in App.js and create AuthContext.js
   const [user, setUser] = useState(null);
-  const restoreToken = async () => {
-    const token = await authStorage.getToken()
-    if(!token) return;
-    setUser(jwtDecode(token));
+  const restoreUser = async () => {
+    const user = await authStorage.getUser()
+    if(user) return setUser(user);
   }
 
 
@@ -89,20 +87,26 @@ const App = gestureHandlerRootHOC(() => {
   // updated app.json ---> splash ---> resizeMode ---> cover and backgroundColor ---> #e63c4b
   
   // *********** 9
-  // 
+  // created hook useAuth
   
   // *********** 10
-  // 
+  // added code for apiClient.addAsyncRequestTransform in client.js for protected API callings
 
   // *********** 11
+  // added register endpoint in users.js and in RegisterScreen
+
   // *********** 12
+  // added useApi in RegisterScreen and AppAcivityIndicator
+
   // *********** 13
+  // updated AppAcivityIndicator to add overlay
+
   // *********** 14
   // *********** 15
 
   
   if(!isReady){
-    return <AppLoading onError={(error)=> console.warn(error)} startAsync={restoreToken} onFinish={()=>setIsReady(true)} />
+    return <AppLoading onError={(error)=> console.warn(error)} startAsync={restoreUser} onFinish={()=>setIsReady(true)} />
   }
 
   return (

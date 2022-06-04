@@ -28,13 +28,16 @@ const ListingsScreen = ({navigation}) => {
   
 
   return (
+    <>
+    <AppActivityIndicator visible={loading} />
+    
     <Screen style={styles.container}>
       {error && <>
         <AppErrorMessage visible={error} error="Couldn't retrieve Listings!" />
         <AppButton onPress={loadListings} title="Retry" />
       </> }
       {/* <ActivityIndicator animating={loading} size="large" /> */}
-      <AppActivityIndicator visible={loading} />
+      
       <FlatList 
         data={listings}
         renderItem={({item}) => (
@@ -48,6 +51,7 @@ const ListingsScreen = ({navigation}) => {
         keyExtractor={(item)=>item.id.toString()}
       />
     </Screen>
+    </>
   )
 }
 

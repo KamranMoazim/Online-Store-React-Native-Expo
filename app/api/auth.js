@@ -1,14 +1,15 @@
 import client from "./client"
 
-const endpoint = "/auth";
+const loginEndpoint = "/auth";
 
 
 
-const login = (email, password) => client.post(endpoint, { email, password });
+
+const login = (email, password) => client.post(loginEndpoint, { email, password });
 
 
 
 
 export default {
-    login
+    login,
 }
