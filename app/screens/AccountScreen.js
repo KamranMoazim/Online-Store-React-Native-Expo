@@ -9,6 +9,9 @@ import colors from '../config/colors'
 import Icon from '../components/Icon'
 
 
+import useAuth from '../hooks/useAuth'
+
+
 const menuItems = [
     {
         title:"My Listings",
@@ -27,12 +30,17 @@ const menuItems = [
 ]
 
 export default function AccountScreen() {
+
+    // const {user, setUser} = useContext(AuthContext);
+    const {user, logOut} = useAuth();
+
+
   return (
     <Screen style={[styles.screen, {paddingTop:0}]}>
         <View >
             <ListItem 
-                title="Mosh Hamedani" 
-                subTitle="mosh@domain.com" 
+                title={user.name}
+                subTitle={user.email}
                 image={require("../assets/mosh.jpg")} />
         </View>
         
@@ -54,6 +62,7 @@ export default function AccountScreen() {
                 name="logout"
                 backgroundColor="#ffe66d"
                 />} 
+            onPress={()=>logOut()}
         />
     </Screen>
   )
