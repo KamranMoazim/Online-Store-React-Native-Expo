@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react"
+import React, {useState, useEffect} from "react"
 import { StyleSheet, View, Platform, StatusBar, Dimensions, Text, TextInput, Switch, Picker, Image } from 'react-native';
 import {useDimensions, useDeviceOrientation, } from "@react-native-community/hooks"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
@@ -8,6 +8,10 @@ import * as Permissions from "expo-permissions";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {NavigationContainer, useNavigation} from "@react-navigation/native"
+// import {AppLoading} from "expo"
+import AppLoading from 'expo-app-loading';
+import jwtDecode from "jwt-decode"
+
 
 // @react-navigation/native-stack
 import WelcomeScreen from "./app/screens/WelcomeScreen";
@@ -34,6 +38,9 @@ import AuthNavigator from "./app/navigation/AuthNavigator";
 import AppNavigator from "./app/navigation/AppNavigator";
 import navigationTheme from "./app/navigation/navigationTheme";
 
+import AuthContext from "./app/Contexts/AuthContext";
+import authStorage from "./app/utils/authStore"
+// import  from "./app/utils/authStore"
 
 
 // import NetInfo, {useNetInfo} from "@react-native-community/netinfo"
@@ -45,64 +52,47 @@ const App = gestureHandlerRootHOC(() => {
 
 
   // *********** 1
-  // following are OFFLINE Strategies, the more you go down the more it gets complex
-  // 1. Notify Users
-  // 2. Disable Features
-  // 3. Cache Data
-  // 4. Store user actions
-
+  // created auth.js and login function
+  
   // *********** 2
-  // expo install @react-native-community/netinfo   ---> to get connection infromation
-  // NetInfo.fetch().then((netInfo)=>console.log(netInfo))      // will called only once
-  // NetInfo.addEventListener((netInfo)=>console.log(netInfo))  // will called again and again  // you also takecare of unsubscribing
-  // const netInfo = useNetInfo()  // for functional components
-
+  // added login functionality in LoginScreen
+  
   // *********** 3
-  // persistence storage
-  // 1. AsyncStorage
-  // 2. SecureStore
-  // 3. SQLite
+  // npm i jwt-decode, create state using useState in App.js and create AuthContext.js
+  const [user, setUser] = useState(null);
+  const restoreToken = async () => {
+    const token = await authStorage.getToken()
+    if(!token) return;
+    setUser(jwtDecode(token));
+  }
+
 
   // *********** 4
-  // AsyncStorage
-  // npm install @react-native-async-storage/async-storage
-  // const demo = async () => {
-  //   try { // we are using try-catch becuase we DONT know whether there is space available in phone or not 
-  //     await AsyncStorage.setItem("person", JSON.stringify({id:1}))
-  //     const value = AsyncStorage.getItem("person");
-  //     const person = JSON.parse(value)
-  //     console.log(person)
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-  // via debugger you can view AsyncStorage
-
+  // updating AccountScreen (name and email)
+  
   // *********** 5
-  // Caching Data
-  // to cache data we must first introduce a CACHING LAYER that do following
-  // 1. serialize/deserialize (stringify/parse)
-  // 2. apply timestamps
-  // 3. remove expired items
+  // added logout in AccountScreen
 
   // *********** 6
-  // created cache.js
-
+  // expo install expo-secure-store and created authStore.js
+  // and updated login , logout functionality
+  // useEffect(()=>{
+  //   restoreToken()
+  // },[])
+  
   // *********** 7
-  // updated client.js
-
+  // added AppLoading from expo in App.js and there will be no need for useEffect after this
+  const [isReady, setIsReady] = useState(false)
+  // 
+  
   // *********** 8
-  // npm i react-native-expo-image-cache expo-blur   --> for image caching
-  // updated Card Component and ListingDetailsScreen
-
+  // updated app.json ---> splash ---> resizeMode ---> cover and backgroundColor ---> #e63c4b
+  
   // *********** 9
-  // storing user actions when offline
-  // better to avoid it and if you want it at any cost then
-  // just google it and better to use firebase or realm.io
-
+  // 
+  
   // *********** 10
-  // created AppOfflineNotice and used it in App.js
-
+  // 
 
   // *********** 11
   // *********** 12
@@ -111,14 +101,18 @@ const App = gestureHandlerRootHOC(() => {
   // *********** 15
 
   
+  if(!isReady){
+    return <AppLoading onError={(error)=> console.warn(error)} startAsync={restoreToken} onFinish={()=>setIsReady(true)} />
+  }
+
   return (
-    <>
+    <AuthContext.Provider value={{user, setUser}}>
       <AppOfflineNotice />
       <NavigationContainer theme={navigationTheme}>
-        {/* <AuthNavigator /> */}
-        <AppNavigator />
+        {user ? (<AppNavigator />) : (<AuthNavigator />) }
+        {/* <AppNavigator /> */}
       </NavigationContainer>
-    </>
+    </AuthContext.Provider>
   );
 })
 

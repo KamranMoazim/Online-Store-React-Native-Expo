@@ -1,12 +1,17 @@
-import React from 'react'
+import React, {useState, useContext} from 'react'
 import { StyleSheet, Image } from 'react-native'
 import * as Yup from "yup"
+import jwtDecode from "jwt-decode";
 
 import Screen from "./Screen";
 import AppFormField from '../components/AppFormField';
 import AppFormSubmitButton from '../components/AppFormSubmitButton';
 import AppForm from '../components/AppForm';
+import AppErrorMessage from '../components/AppErrorMessage';
+import authApi from "../api/auth"
 
+import AuthContext from '../Contexts/AuthContext';
+import authStorage from "../utils/authStore"
 
 const validationSchema = Yup.object().shape({
     email:Yup.string().required().email().label("Email"),
@@ -15,6 +20,23 @@ const validationSchema = Yup.object().shape({
 
 const LoginScreen = () => {
 
+    const [loginFailed, setLoginFailed] = useState(false);
+    const authContext = useContext(AuthContext)
+
+    const handleSubmit = async ({email, password}) => {
+        const response = await authApi.login(email, password);
+        // console.log(email)
+        // console.log(password)
+        // console.log(response)
+        if(!response.ok) return setLoginFailed(true);
+        setLoginFailed(false)
+        // console.log(response)
+        const user = jwtDecode(response.data);
+        // console.log(user)
+        authContext.setUser(user);
+        await authStorage.storeToken(response.data)
+    }
+
   return (
     <Screen style={styles.container}>
         <Image style={styles.logo} source={require("../assets/logo-red.png")} />
@@ -22,10 +44,12 @@ const LoginScreen = () => {
             initialValues={{email:"", password:""}}
             validationSchema={validationSchema}
             onSubmit = {(values, { resetForm }) => {
-                console.log(values)
-                // resetForm();
+                handleSubmit(values);
+                // console.log(values)
+                resetForm();
             }}
         >
+            <AppErrorMessage error="Invalid Email or/and Password!" visible={loginFailed} />
             <AppFormField
                 icon="email" 
                 placeholder="Email"
