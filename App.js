@@ -39,6 +39,7 @@ import navigationTheme from "./app/navigation/navigationTheme";
 
 import AuthContext from "./app/Contexts/AuthContext";
 import authStorage from "./app/utils/authStore"
+import { navigationRef } from "./app/navigation/rootNavigation";
 // import  from "./app/utils/authStore"
 
 
@@ -51,59 +52,80 @@ const App = gestureHandlerRootHOC(() => {
 
 
   // *********** 1
-  // created auth.js and login function
+  // push notification Architecture
+  // 1. Register app to get notification
+  // 2. Store token on the server
+  // 3. Send a notification
+  // 4. Handle received notifications
+  
   
   // *********** 2
-  // added login functionality in LoginScreen
+  // npm i expo-notifications
+  // added registerForPushNotifications in AppNavigator.js
+  
   
   // *********** 3
-  // npm i jwt-decode, create state using useState in App.js and create AuthContext.js
+  // created expoPushTokens.js in api folder and added register api and used it in AppNavigator.js 
+
+
+  // *********** 4
+  // sending notification via expo online (from expo testing)
+  
+  
+  // *********** 5
+  // sending notification via expo from server (adding functionality in server)
+  
+
+  // *********** 6
+  // listening to Notification in real APP 
+  // Notifications.addPushTokenListener(notification => console.log(notification))
+  
+  
+  // *********** 7
+  // created rootNavigation.js
+  // we created ref beacuse we wants to access navigation in AppNavigator.js
+  // and ew donot have the direct access throuhg props.navigation and we also cannot use useNavigation hook
+  // so we created rootNavigation.js and linked navigationRef to below NavigationContainer
+  // and now we can use navigation in AppNavigator.js
+  
+  
+  
+  // *********** 8
+  // when you click on notification you often take USER to some screen
+  // so added above created (navigate method) in AppNavigator.js ----> navigate(routes.ACCOUNT)
+  
+  
+  // *********** 9
+  // created hook useNotifications.js
+  // moved all code from AppNavigator.js to here
+  
+  
+  // *********** 10
+  // using Local Notifications
+  
+
+  // *********** 11
+  
+
+  // *********** 12
+  
+
+  // *********** 13
+  
+
+  // *********** 14
+  // *********** 15
+
+
+  
+  const [isReady, setIsReady] = useState(false)
   const [user, setUser] = useState(null);
   const restoreUser = async () => {
     const user = await authStorage.getUser()
     if(user) return setUser(user);
   }
 
-
-  // *********** 4
-  // updating AccountScreen (name and email)
   
-  // *********** 5
-  // added logout in AccountScreen
-
-  // *********** 6
-  // expo install expo-secure-store and created authStore.js
-  // and updated login , logout functionality
-  // useEffect(()=>{
-  //   restoreToken()
-  // },[])
-  
-  // *********** 7
-  // added AppLoading from expo in App.js and there will be no need for useEffect after this
-  const [isReady, setIsReady] = useState(false)
-  // 
-  
-  // *********** 8
-  // updated app.json ---> splash ---> resizeMode ---> cover and backgroundColor ---> #e63c4b
-  
-  // *********** 9
-  // created hook useAuth
-  
-  // *********** 10
-  // added code for apiClient.addAsyncRequestTransform in client.js for protected API callings
-
-  // *********** 11
-  // added register endpoint in users.js and in RegisterScreen
-
-  // *********** 12
-  // added useApi in RegisterScreen and AppAcivityIndicator
-
-  // *********** 13
-  // updated AppAcivityIndicator to add overlay
-
-  // *********** 14
-  // *********** 15
-
   
   if(!isReady){
     return <AppLoading onError={(error)=> console.warn(error)} startAsync={restoreUser} onFinish={()=>setIsReady(true)} />
@@ -112,9 +134,8 @@ const App = gestureHandlerRootHOC(() => {
   return (
     <AuthContext.Provider value={{user, setUser}}>
       <AppOfflineNotice />
-      <NavigationContainer theme={navigationTheme}>
+      <NavigationContainer ref={navigationRef} theme={navigationTheme}>
         {user ? (<AppNavigator />) : (<AuthNavigator />) }
-        {/* <AppNavigator /> */}
       </NavigationContainer>
     </AuthContext.Provider>
   );
