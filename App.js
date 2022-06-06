@@ -52,69 +52,52 @@ const App = gestureHandlerRootHOC(() => {
 
 
   // *********** 1
-  // push notification Architecture
-  // 1. Register app to get notification
-  // 2. Store token on the server
-  // 3. Send a notification
-  // 4. Handle received notifications
+  // add icon.png in assets
+  // icon image should be 1024x1024
   
   
   // *********** 2
-  // npm i expo-notifications
-  // added registerForPushNotifications in AppNavigator.js
-  
+  // npm i -g sharp-cli
+  // npx expo-optimize
+  // above two are for optimizing assets
   
   // *********** 3
-  // created expoPushTokens.js in api folder and added register api and used it in AppNavigator.js 
+  // TWO thisngs
+  // 1. install libraries and check if you can do same thing without the library or using other library 
+  // with less importing cost.
+  // 2. cost is also deprecated the way you import something from module.
 
 
   // *********** 4
-  // sending notification via expo online (from expo testing)
-  
+  // use error reporting tools for PRODUCTION app
+  // created logger.js
+
   
   // *********** 5
-  // sending notification via expo from server (adding functionality in server)
-  
+  // created settings.js for developemental settings
 
   // *********** 6
-  // listening to Notification in real APP 
-  // Notifications.addPushTokenListener(notification => console.log(notification))
+  // to PUBLISHH YOUR APP
+  // expo publish --release-channel staging
   
   
   // *********** 7
-  // created rootNavigation.js
-  // we created ref beacuse we wants to access navigation in AppNavigator.js
-  // and ew donot have the direct access throuhg props.navigation and we also cannot use useNavigation hook
-  // so we created rootNavigation.js and linked navigationRef to below NavigationContainer
-  // and now we can use navigation in AppNavigator.js
+  // expo build:ios
   
   
   
   // *********** 8
-  // when you click on notification you often take USER to some screen
-  // so added above created (navigate method) in AppNavigator.js ----> navigate(routes.ACCOUNT)
+  // expo build:android
+  // expo fetch:android:keystore
+  // save them somewhere else (BE CAREFUL)
   
   
   // *********** 9
-  // created hook useNotifications.js
-  // moved all code from AppNavigator.js to here
+  // 
   
   
   // *********** 10
-  // using Local Notifications
-  
-
-  // *********** 11
-  
-
-  // *********** 12
-  
-
-  // *********** 13
-  
-
-  // *********** 14
-  // *********** 15
+  // 
 
 
   
